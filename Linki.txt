@@ -1,0 +1,25 @@
+Witam Panie Pawle,
+
+Poni¿ej zadanie – termin realizacji do 23.03.2021
+Przesy³am te¿ adres mailowy kole¿anki – programistki, która mo¿e odpowiedzieæ na Pana pytania: Anna Sojka-Pal (anna.sojka-pal@enova.pl).
+Zadanie proszê odes³aæ na mój adres e-mail.
+ Zadanie:
+1. Stworzyæ projekt w GIT i branch developerski, releasowy i 2 branch-y pod funkcjonalnoœci.
+2. Do ka¿dego z branch-y powrzucaæ kilka commit-ów.
+3. Przygotowaæ rozwi¹zanie, które wyci¹gnie wszystkie commit-y z wszystkich branch-y.
+4. Tak uzyskan¹ kolekcjê nale¿y posortowaæ po dacie i przygotowaæ formularz w enova365, który pozwoli na prezentacjê informacji:
+a) iloœæ commit-ów, które dana osoba wprowadzi³a danego dnia
+b) œrednia iloœæ commit-ów dodawanych przez dan¹ osobê dziennie
+Przyk³ady ju¿ stworzonych dodatków (wraz z opisem w Readme.md i Konspekt.md) mo¿na znaleŸæ pod linkiem:
+https://github.com/soneta/Samples
+Publiczna dokumentacja :
+https://dok.enova365.pl/Topic
+Przyk³ady programistyczne :
+https://github.com/soneta/Samples
+Jakby nie mia³ Pan SQL serwera i chcia³ ca³e œrodowisko od nowa postawiæ mo¿na skorzystaæ z tego instalatora :
+http://www.enova.pl/produkt/aktualizuj-enova/
+samodzielnie instaluje serwer Microsoft SQL Server 2012, którego instalacja nie jest mo¿liwa na systemie Windows XP. Has³o dla operatora serwera SQL: enova.122613641
+Informacje na temat tworzenia dodatków do enova mo¿na znaleŸæ na GitHub pod linkiem: https://github.com/soneta/Soneta.Platform.Developer
+I link do najnowszej wersji enova365 :
+instalator enova365 2001.0.2 – instalator bez œrodowiska MS SQL Server
+instalator enova365 demo 2001.0.2 samodzielnie instaluje serwer Microsoft SQL Server 2012, którego instalacja nie jest mo¿liwa na systemie Windows XP. Has³o dla operatora serwera SQL: enova.122613641

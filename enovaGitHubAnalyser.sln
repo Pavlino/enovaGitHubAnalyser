@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{08A55868-D956-4E70-AD7B-1A6279D0B454}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "enovaGitHubAnalyser", "enovaGitHubAnalyser\enovaGitHubAnalyser\enovaGitHubAnalyser.csproj", "{96FEDC5C-C746-402E-BF1D-119A9BB7DE54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "enovaGitHubAnalyser.UI", "enovaGitHubAnalyser\enovaGitHubAnalyser.UI\enovaGitHubAnalyser.UI.csproj", "{D7983856-933D-4AA4-8E29-4100C926420E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "enovaGitHubAnalyser.Tests", "enovaGitHubAnalyser\enovaGitHubAnalyser.Tests\enovaGitHubAnalyser.Tests.csproj", "{C810E2DF-BCF3-4353-A008-13E709127AF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96FEDC5C-C746-402E-BF1D-119A9BB7DE54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96FEDC5C-C746-402E-BF1D-119A9BB7DE54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96FEDC5C-C746-402E-BF1D-119A9BB7DE54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96FEDC5C-C746-402E-BF1D-119A9BB7DE54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7983856-933D-4AA4-8E29-4100C926420E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7983856-933D-4AA4-8E29-4100C926420E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7983856-933D-4AA4-8E29-4100C926420E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7983856-933D-4AA4-8E29-4100C926420E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C810E2DF-BCF3-4353-A008-13E709127AF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C810E2DF-BCF3-4353-A008-13E709127AF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C810E2DF-BCF3-4353-A008-13E709127AF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C810E2DF-BCF3-4353-A008-13E709127AF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05E6BA7F-4700-459F-B0EF-735E43BD78F7}
+	EndGlobalSection
+EndGlobal
