@@ -3,4 +3,12 @@
   <PropertyGroup>
     <TargetFramework>$(SonetaTargetFramework)</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="GitHubExtractorWorkerParams.Ogolne.pageform.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="GitHub.business.xml">
+      <Generator>BusinessGenerator</Generator>
+    </None>
+  </ItemGroup>
 </Project>
