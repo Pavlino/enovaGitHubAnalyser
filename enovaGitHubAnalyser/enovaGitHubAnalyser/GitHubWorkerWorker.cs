@@ -1,6 +1,7 @@
 ﻿using enovaGitHubAnalyser;
 using Soneta.Business;
 using Soneta.Business.UI;
+using Soneta.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,45 +28,71 @@ namespace enovaGitHubAnalyser
         {
             return Task.Run(AktualizacjaDanychAsync).Result;
         }
-            
+
 
         private async System.Threading.Tasks.Task<object> AktualizacjaDanychAsync()
         {
-            var commity = @params.Context[typeof(Commit[]), false] as Commit[];
+            var commity = @params.Session.GetGitHub().Commits;
 
             try
             {
                 var github = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("sonetaGitHubConnector"));
-                var commits = await github.Repository.Commit.GetAll("Pavlino", "enovaGitHubAnalyser");
-                
-                using (var t = @params.Session.Logout(true))
+                var branches = await github.Repository.Branch.GetAll(@params.pWlasciciel, @params.pNazwa);
+                //var commits = await github.Repository.Commit.GetAll("Pavlino", "enovaGitHubAnalyser");
+
+                List<Octokit.GitHubCommit> commits = new List<Octokit.GitHubCommit>();
+                foreach (var branch in branches)
                 {
-                    foreach (Octokit.GitHubCommit c in commits)
+                    var commitRequest = new Octokit.CommitRequest();
+                    commitRequest.Sha = branch.Name;
+                    var branchCommits = await github.Repository.Commit.GetAll(@params.pWlasciciel, @params.pNazwa, commitRequest);
+
+                    commits.AddRange(branchCommits);
+                }
+
+                if (commits.Count > 0)
+                {
+                    using (var t = @params.Session.Logout(true))
                     {
-                        if (!commity.Any(commitWithSha => commitWithSha.SHA == c.Sha))
+                        List<string> presentShas = new List<string>();
+                        List<string> shas = new List<string>();
+                        foreach (Octokit.GitHubCommit c in commits)
                         {
-                            Commit commit = new Commit
+                            if (!shas.Contains(c.Sha))
                             {
-                                SHA = c.Sha,
-                                Autor = c.Commit.Author.Name,
-                                Data = c.Commit.Author.Date.UtcDateTime
-                            };
+                                shas.Add(c.Sha);
+                                if (!commity.CommitExists(c.Sha))
+                                {
+                                    Commit commit = new Commit
+                                    {
+                                        SHA = c.Sha,
+                                        Autor = c.Commit.Author.Name,
+                                        Data = c.Commit.Author.Date.UtcDateTime
+                                    };
 
-                            @params.Session.AddRow(commit);
+                                    @params.Session.AddRow(commit);
+                                }
+                                else
+                                {
+                                    presentShas.Add(c.Sha);
+                                }
+                            }
                         }
-                    }
 
-                    t.Commit();
-                } 
+                        commity.RemoveInvalidCommits(presentShas);
+
+                        t.Commit();
+                    }
+                }
 
                 return "Operacja zakończona pomyślnie";
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return "Błąd poczdas operacji: " + e.Message;
             }
-            
+
 
         }
 
@@ -97,8 +124,10 @@ namespace enovaGitHubAnalyser
             {
             }
 
+            [Caption("Właściciel repozytorium")]
             public string pWlasciciel { get; set; }
 
+            [Caption("Nazwa repozytorium")]
             public string pNazwa { get; set; }
         }
 

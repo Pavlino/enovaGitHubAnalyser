@@ -44,7 +44,7 @@ namespace enovaGitHubAnalyser {
 			Name = "Identyfikator",
 			Unique = true,
 			PrimaryKey = true,
-			KeyFields = new[] {"Id"},
+			KeyFields = new[] {"Sha"},
 		};
 
 		/// <summary>
@@ -67,10 +67,10 @@ namespace enovaGitHubAnalyser {
 				}
 
 				protected override object[] GetData(Row row, Record rec) => new object[] {
-					((GitHubCommitRecord)rec).Id
+					((GitHubCommitRecord)rec).Sha.TrimEnd()
 				};
 
-				public GitHubCommit this[int id] => (GitHubCommit)Find(id);
+				public GitHubCommit this[string sha] => (GitHubCommit)Find(sha);
 			}
 
 			public IdentyfikatorKey Identyfikator => (IdentyfikatorKey)Session.Keys[keyInfoGitHubCommitIdentyfikator];
@@ -108,10 +108,9 @@ namespace enovaGitHubAnalyser {
 			[Soneta.Langs.TranslateIgnore]
 			protected override sealed void PrepareNames(StringBuilder names, string divider) {
 				names.Append(divider); names.Append("Guid");
-				names.Append(divider); names.Append("Id");
+				names.Append(divider); names.Append("Sha");
 				names.Append(divider); names.Append("Autor");
 				names.Append(divider); names.Append("Data");
-				names.Append(divider); names.Append("Branch");
 			}
 
 		}
@@ -127,23 +126,28 @@ namespace enovaGitHubAnalyser {
 			protected GitHubCommitRow() : base(true) {
 			}
 
+			[MaxLength(255)]
 			[Required]
-			public int Id {
+			public string Sha {
 				get {
 					if (record==null) GetRecord();
-					return record.Id;
+					return record.Sha;
 				}
 				set {
-					GitHubCommitSchema.IdBeforeEdit?.Invoke((GitHubCommit)this, ref value);
-					if (value==0) throw new RequiredException(this, "Id");
+					GitHubCommitSchema.ShaBeforeEdit?.Invoke((GitHubCommit)this, ref value);
+					if (value!=null) value = value.TrimEnd();
+					if (string.IsNullOrEmpty(value)) throw new RequiredException(this, "Sha");
+					if (value.Length>ShaLength) throw new ValueToLongException(this, "Sha", ShaLength);
 					GetEdit(record==null, false);
-					record.Id = value;
+					record.Sha = value;
 					if (State!=RowState.Detached) {
 						ResyncSet(keyInfoGitHubCommitIdentyfikator);
 					}
-					GitHubCommitSchema.IdAfterEdit?.Invoke((GitHubCommit)this);
+					GitHubCommitSchema.ShaAfterEdit?.Invoke((GitHubCommit)this);
 				}
 			}
+
+			public const int ShaLength = 255;
 
 			[MaxLength(100)]
 			public string Autor {
@@ -176,24 +180,6 @@ namespace enovaGitHubAnalyser {
 				}
 			}
 
-			[MaxLength(100)]
-			public string Branch {
-				get {
-					if (record==null) GetRecord();
-					return record.Branch;
-				}
-				set {
-					GitHubCommitSchema.BranchBeforeEdit?.Invoke((GitHubCommit)this, ref value);
-					if (value!=null) value = value.TrimEnd();
-					if (value.Length>BranchLength) throw new ValueToLongException(this, "Branch", BranchLength);
-					GetEdit(record==null, false);
-					record.Branch = value;
-					GitHubCommitSchema.BranchAfterEdit?.Invoke((GitHubCommit)this);
-				}
-			}
-
-			public const int BranchLength = 100;
-
 			[Browsable(false)]
 			public new Commits Table => (Commits)base.Table;
 
@@ -220,15 +206,15 @@ namespace enovaGitHubAnalyser {
 				return result;
 			}
 
-			class IdRequiredVerifier : RequiredVerifier {
-				internal IdRequiredVerifier(IRow row) : base(row, "Id") {
+			class ShaRequiredVerifier : RequiredVerifier {
+				internal ShaRequiredVerifier(IRow row) : base(row, "Sha") {
 				}
-				protected override bool IsValid() => !(((GitHubCommitRow)Row).Id==0);
+				protected override bool IsValid() => !(string.IsNullOrEmpty(((GitHubCommitRow)Row).Sha));
 			}
 
 			protected override void OnAdded() {
 				base.OnAdded();
-				Session.Verifiers.Add(new IdRequiredVerifier(this));
+				Session.Verifiers.Add(new ShaRequiredVerifier(this));
 				GitHubCommitSchema.OnAdded?.Invoke((GitHubCommit)this);
 			}
 
@@ -261,12 +247,11 @@ namespace enovaGitHubAnalyser {
 
 		public sealed class GitHubCommitRecord : GuidedRecord {
 			[Required]
-			public int Id;
+			[MaxLength(255)]
+			public string Sha = "";
 			[MaxLength(100)]
 			public string Autor = "";
 			public Date Data;
-			[MaxLength(100)]
-			public string Branch = "";
 
 			public override Record Clone() {
 				GitHubCommitRecord rec = (GitHubCommitRecord)MemberwiseClone();
@@ -275,22 +260,21 @@ namespace enovaGitHubAnalyser {
 
 			public override void Load(RecordReader creator) {
 				Guid = creator.Read_guid();
-				Id = creator.Read_int();
+				Sha = creator.Read_string();
 				Autor = creator.Read_string();
 				Data = creator.Read_date();
-				Branch = creator.Read_string();
 			}
 		}
 
 		public static class GitHubCommitSchema {
 
-			internal static RowDelegate<GitHubCommitRow, int> IdBeforeEdit;
-			public static void AddIdBeforeEdit(RowDelegate<GitHubCommitRow, int> value)
-				=> IdBeforeEdit = (RowDelegate<GitHubCommitRow, int>)Delegate.Combine(IdBeforeEdit, value);
+			internal static RowDelegate<GitHubCommitRow, string> ShaBeforeEdit;
+			public static void AddShaBeforeEdit(RowDelegate<GitHubCommitRow, string> value)
+				=> ShaBeforeEdit = (RowDelegate<GitHubCommitRow, string>)Delegate.Combine(ShaBeforeEdit, value);
 
-			internal static RowDelegate<GitHubCommitRow> IdAfterEdit;
-			public static void AddIdAfterEdit(RowDelegate<GitHubCommitRow> value)
-				=> IdAfterEdit = (RowDelegate<GitHubCommitRow>)Delegate.Combine(IdAfterEdit, value);
+			internal static RowDelegate<GitHubCommitRow> ShaAfterEdit;
+			public static void AddShaAfterEdit(RowDelegate<GitHubCommitRow> value)
+				=> ShaAfterEdit = (RowDelegate<GitHubCommitRow>)Delegate.Combine(ShaAfterEdit, value);
 
 			internal static RowDelegate<GitHubCommitRow, string> AutorBeforeEdit;
 			public static void AddAutorBeforeEdit(RowDelegate<GitHubCommitRow, string> value)
@@ -307,14 +291,6 @@ namespace enovaGitHubAnalyser {
 			internal static RowDelegate<GitHubCommitRow> DataAfterEdit;
 			public static void AddDataAfterEdit(RowDelegate<GitHubCommitRow> value)
 				=> DataAfterEdit = (RowDelegate<GitHubCommitRow>)Delegate.Combine(DataAfterEdit, value);
-
-			internal static RowDelegate<GitHubCommitRow, string> BranchBeforeEdit;
-			public static void AddBranchBeforeEdit(RowDelegate<GitHubCommitRow, string> value)
-				=> BranchBeforeEdit = (RowDelegate<GitHubCommitRow, string>)Delegate.Combine(BranchBeforeEdit, value);
-
-			internal static RowDelegate<GitHubCommitRow> BranchAfterEdit;
-			public static void AddBranchAfterEdit(RowDelegate<GitHubCommitRow> value)
-				=> BranchAfterEdit = (RowDelegate<GitHubCommitRow>)Delegate.Combine(BranchAfterEdit, value);
 
 			internal static RowDelegate<GitHubCommitRow> OnLoaded;
 			public static void AddOnLoaded(RowDelegate<GitHubCommitRow> value)

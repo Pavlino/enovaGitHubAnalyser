@@ -10,8 +10,35 @@ using System.Threading.Tasks;
 
 namespace enovaGitHubAnalyser
 {
-    
+
     public class Commits : GitHubModule.GitHubCommitTable
     {
+
+        public bool CommitExists(string sha)
+        {
+            foreach (Commit commit in this.Rows)
+            {
+                if (commit.SHA == sha)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void RemoveInvalidCommits(List<string> shas)
+        {
+            List<Commit> commitsToDelete = new List<Commit>();
+            foreach (Commit commit in this.Rows)
+            {
+                if (!shas.Contains(commit.SHA))
+                {
+                    commitsToDelete.Add(commit);
+                }
+            }
+
+            commitsToDelete.ForEach(c => c.Delete());
+        }
     }
 }

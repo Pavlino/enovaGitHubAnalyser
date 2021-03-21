@@ -25,11 +25,10 @@
 
   <table name ="GitHubCommit" tablename="Commits" tablecaption="Tabela z dodanymi comitty'ami" guided ="Root">
     <key name="Identyfikator" keyprimary="true" keyunique="true">
-      <keycol name="Id"/>
+      <keycol name="Sha"/>
     </key>
-    <col name="Id" required="true" type="int"/>
+    <col name="Sha" required="true" type="string" length="255"/>
     <col name="Autor" required ="false" type ="string" length="100"/>
     <col name="Data" required="false" type="date"/>
-    <col name="Branch" required="false" type="string" length="100"/>
   </table>
 </module>
