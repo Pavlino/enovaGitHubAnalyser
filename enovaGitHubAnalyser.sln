@@ -7,13 +7,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		global.json = global.json
+<<<<<<< HEAD
+		Zadanie.txt = Zadanie.txt
+=======
+		plik_branch_2.txt = plik_branch_2.txt
+>>>>>>> feature/2_wyswietlanie_danych
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "enovaGitHubAnalyser", "enovaGitHubAnalyser\enovaGitHubAnalyser\enovaGitHubAnalyser.csproj", "{96FEDC5C-C746-402E-BF1D-119A9BB7DE54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "enovaGitHubAnalyser", "enovaGitHubAnalyser\enovaGitHubAnalyser\enovaGitHubAnalyser.csproj", "{96FEDC5C-C746-402E-BF1D-119A9BB7DE54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "enovaGitHubAnalyser.UI", "enovaGitHubAnalyser\enovaGitHubAnalyser.UI\enovaGitHubAnalyser.UI.csproj", "{D7983856-933D-4AA4-8E29-4100C926420E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "enovaGitHubAnalyser.UI", "enovaGitHubAnalyser\enovaGitHubAnalyser.UI\enovaGitHubAnalyser.UI.csproj", "{D7983856-933D-4AA4-8E29-4100C926420E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "enovaGitHubAnalyser.Tests", "enovaGitHubAnalyser\enovaGitHubAnalyser.Tests\enovaGitHubAnalyser.Tests.csproj", "{C810E2DF-BCF3-4353-A008-13E709127AF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "enovaGitHubAnalyser.Tests", "enovaGitHubAnalyser\enovaGitHubAnalyser.Tests\enovaGitHubAnalyser.Tests.csproj", "{C810E2DF-BCF3-4353-A008-13E709127AF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

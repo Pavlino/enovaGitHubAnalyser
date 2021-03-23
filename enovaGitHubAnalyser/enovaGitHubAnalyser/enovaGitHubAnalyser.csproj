@@ -14,7 +14,10 @@
   <ItemGroup>
     <PackageReference Include="Octokit" Version="0.50.0" />
   </ItemGroup>
+<<<<<<< HEAD
   <ItemGroup>
     <EmbeddedResource Remove="GitHubLoaderWorkerParams.Ogolne.pageform.xml" />
   </ItemGroup>
+=======
+>>>>>>> release
 </Project>
