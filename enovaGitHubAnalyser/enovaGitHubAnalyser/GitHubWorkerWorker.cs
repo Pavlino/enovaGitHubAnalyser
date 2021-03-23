@@ -1,4 +1,5 @@
 ﻿using enovaGitHubAnalyser;
+using enovaGitHubAnalyser.GitHubExtension;
 using Soneta.Business;
 using Soneta.Business.UI;
 using Soneta.Types;
@@ -32,7 +33,7 @@ namespace enovaGitHubAnalyser
 
         private async System.Threading.Tasks.Task<object> AktualizacjaDanychAsync()
         {
-            var commity = @params.Session.GetGitHub().Commits;
+            var commity = @params.Session.GetGitHubExtension().Commity;
 
             try
             {
@@ -95,28 +96,6 @@ namespace enovaGitHubAnalyser
 
 
         }
-
-        private object DodajNaSztywno()
-        {
-            using (var t = @params.Session.Logout(true))
-            {
-                //List<Commit> lstCommits = Commity.ToList();
-                Commit commit = new Commit
-                {
-                    SHA = "test",
-                    Autor = "tester",
-                    Data = DateTime.UtcNow
-                };
-                @params.Session.AddRow(commit);
-                //.lstCommits.Add(commit);
-                //Commity = lstCommits.ToArray();
-                t.Commit();
-            }
-
-            return "Operacja została zakończona";
-
-        }
-
 
         public class GitHubWorkerWorkerParams : ContextBase
         {
