@@ -69,7 +69,6 @@ namespace enovaGitHubAnalyser
                 {
                     using (var t = @params.Session.Logout(true))
                     {
-                        List<string> presentShas = new List<string>();
                         List<string> shas = new List<string>();
                         foreach (Octokit.GitHubCommit c in commits)
                         {
@@ -87,14 +86,10 @@ namespace enovaGitHubAnalyser
 
                                     @params.Session.AddRow(commit);
                                 }
-                                else
-                                {
-                                    presentShas.Add(c.Sha);
-                                }
                             }
                         }
 
-                        commity.RemoveInvalidCommits(presentShas);
+                        commity.RemoveInvalidCommits(shas);
 
                         t.Commit();
                     }
