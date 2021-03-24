@@ -1,19 +1,12 @@
-﻿using enovaGitHubAnalyser;
-<<<<<<< HEAD
-=======
-using enovaGitHubAnalyser.GitHubExtension;
->>>>>>> release
-using Soneta.Business;
+﻿using Soneta.Business;
 using Soneta.Business.UI;
 using Soneta.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-<<<<<<< HEAD
+using enovaGitHubAnalyser;
 using enovaGitHubAnalyser.GitHubExtension;
-=======
->>>>>>> release
 
 [assembly: Worker(typeof(GitHubWorkerWorker), typeof(Commity))]
 
@@ -37,16 +30,8 @@ namespace enovaGitHubAnalyser
             return Task.Run(AktualizacjaDanychAsync).Result;
         }
 
-<<<<<<< HEAD
-        
-        private async Task<object> AktualizacjaDanychAsync()
-        {
-
-=======
-
         private async System.Threading.Tasks.Task<object> AktualizacjaDanychAsync()
         {
->>>>>>> release
             var commity = @params.Session.GetGitHubExtension().Commity;
 
             try
@@ -102,12 +87,6 @@ namespace enovaGitHubAnalyser
             {
                 return "Błąd poczdas operacji: " + e.Message;
             }
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> release
-
         }
 
         public class GitHubWorkerWorkerParams : ContextBase
